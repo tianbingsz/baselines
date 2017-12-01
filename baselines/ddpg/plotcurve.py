@@ -119,7 +119,6 @@ def main(argv):
         outputfile = sys.stdout
 
     input_dir = "/home/tianbing/github/baselines/baselines/ddpg/logs/"
-    pdb.set_trace()
     inputfiles = [input_dir + inputfile + "/progress.csv" for inputfile in
                   args.inputs]
     plot_average_return(args.key, inputfiles[0], outputfile)
