@@ -179,7 +179,7 @@ def parse_args():
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--reward-scale', type=float, default=1.)
     parser.add_argument('--clip-norm', type=float, default=None)
-    parser.add_argument('--nb-epochs', type=int, default=500)
+    parser.add_argument('--nb-epochs', type=int, default=100)
                         # with default settings, perform 1M steps total
     parser.add_argument('--nb-epoch-cycles', type=int, default=20)
     parser.add_argument(
@@ -214,8 +214,8 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
     env_name = args['env_id']
-    root_dir = '/home/tianbing/github/baselines/baselines/ddpg/logs/'
-    for nb_epoch_cycles in [10,20,60,100]:
+    root_dir = '/usr/local/tianbing/baidu/idl/baselines/baselines/ddpg/logs/'
+    for nb_epoch_cycles in [100]:
         args['nb_epoch_cycles'] = nb_epoch_cycles
         args['nb_rollout_steps'] = int(1e4 / nb_epoch_cycles)
         log_dir = os.path.join(root_dir,
@@ -223,7 +223,7 @@ if __name__ == '__main__':
              args['noise_type'], args['nb_epoch_cycles'],
              args['nb_rollout_steps'],
              datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")))
-         if MPI.COMM_WORLD.Get_rank() == 0:
-             logger.configure(dir=log_dir)
-         # Run actual script.
-         run(**args)
+        if MPI.COMM_WORLD.Get_rank() == 0:
+            logger.configure(dir=log_dir)
+        # Run actual script.
+        run(**args)
