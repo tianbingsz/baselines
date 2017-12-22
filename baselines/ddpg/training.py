@@ -11,6 +11,7 @@ from baselines import logger
 import numpy as np
 import tensorflow as tf
 from mpi4py import MPI
+import pdb
 
 
 def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, param_noise, actor, critic,
@@ -78,6 +79,7 @@ def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, pa
                     if rank == 0 and render:
                         env.render()
                     assert max_action.shape == action.shape
+                    #pdb.set_trace()
                     new_obs, r, done, info = env.step(max_action * action)  # scale for execution in env (as far as DDPG is concerned, every action is in [-1, 1])
                     t += 1
                     if rank == 0 and render:
@@ -93,6 +95,7 @@ def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, pa
 
                     if done:
                         # Episode done.
+                        #pdb.set_trace()
                         epoch_episode_rewards.append(episode_reward)
                         episode_rewards_history.append(episode_reward)
                         epoch_episode_steps.append(episode_step)
@@ -103,6 +106,21 @@ def train(env, nb_epochs, nb_epoch_cycles, render_eval, reward_scale, render, pa
 
                         agent.reset()
                         obs = env.reset()
+
+                # finish one rollout
+                if episode_reward > 0:
+                    # Episode not done, but has reward
+                    #pdb.set_trace()
+                    epoch_episode_rewards.append(episode_reward)
+                    episode_rewards_history.append(episode_reward)
+                    epoch_episode_steps.append(episode_step)
+                    episode_reward = 0.
+                    episode_step = 0
+                    epoch_episodes += 1
+                    episodes += 1
+
+                    agent.reset()
+                    #obs = env.reset()
 
                 # Train.
                 epoch_actor_losses = []
