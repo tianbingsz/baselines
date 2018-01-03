@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# Liang Zhao, 01/03/2018
+
 import argparse
 import time
 import datetime
@@ -214,8 +217,8 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
     env_name = args['env_id']
-    root_dir = '/usr/local/tianbing/baidu/idl/baselines/baselines/ddpg/logs/'
-    for nb_epoch_cycles in [100]:
+    root_dir = '/home/tianbing/github/baselines/baselines/ddpg/logs/'
+    for nb_epoch_cycles in [10, 20, 50, 100]:
         args['nb_epoch_cycles'] = nb_epoch_cycles
         args['nb_rollout_steps'] = int(1e4 / nb_epoch_cycles)
         log_dir = os.path.join(root_dir,
