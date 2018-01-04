@@ -3,6 +3,8 @@ import numpy as np
 
 class RingBuffer(object):
     def __init__(self, maxlen, shape, dtype='float32'):
+        self.dtype = dtype
+        self.shape = shape
         self.maxlen = maxlen
         self.start = 0
         self.length = 0
@@ -31,6 +33,10 @@ class RingBuffer(object):
             raise RuntimeError()
         self.data[(self.start + self.length - 1) % self.maxlen] = v
 
+    def clear(self):
+      self.start = 0
+      self.length = 0
+      self.data = np.zeros((self.maxlen,) + self.shape).astype(self.dtype)
 
 def array_min2d(x):
     x = np.array(x)
@@ -77,6 +83,13 @@ class Memory(object):
         self.rewards.append(reward)
         self.observations1.append(obs1)
         self.terminals1.append(terminal1)
+
+    def clear(self):
+        self.observations0.clear()
+        self.actions.clear()
+        self.rewards.clear()
+        self.terminals1.clear()
+        self.observations1.clear()
 
     @property
     def nb_entries(self):

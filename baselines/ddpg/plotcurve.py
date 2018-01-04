@@ -45,7 +45,6 @@ optional arguments:
 
 def plot_average_return(keys, inputfile, outputfile):
     print("open file ", inputfile)
-    # pdb.set_trace()
     with open(inputfile, 'r') as f:
         data = list(reader(f))
     # data[0] header
@@ -68,6 +67,9 @@ def plot_average_return(keys, inputfile, outputfile):
     num_steps = [d[sIdx] for d in data[1::]]
     # plot
     #pyplot.plot(range(len(returns)), returns, linewidth=3.0)
+    for i in range(len(returns)):
+        if not returns[i]:
+            returns[i] = 0
     pyplot.plot(num_steps, returns, linewidth=3.0)
     pyplot.title('average return ' + ' over epoches')
     # pyplot.xscale('log')
@@ -111,14 +113,13 @@ def main(argv):
     if args.output:
         outputfile = open(args.output, 'wb')
         if not format:
-            # pdb.set_trace()
             format = os.path.splitext(args.output)[1]
             if not format:
                 format = 'png'
     else:
         outputfile = sys.stdout
 
-    input_dir = "/home/tianbing/github/baselines/baselines/ddpg/logs/"
+    input_dir = "/usr/local/tianbing/baidu/idl/baselines/baselines/ddpg/exp_logs/"
     inputfiles = [input_dir + inputfile + "/progress.csv" for inputfile in
                   args.inputs]
     plot_average_return(args.key, inputfiles[0], outputfile)
