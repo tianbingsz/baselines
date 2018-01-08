@@ -124,7 +124,8 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
     env_name = args['env_id'] 
-    root_dir = '/home/tianbing/github/baselines/baselines/ddpg/logs/'
+    #root_dir = '/home/tianbing/github/baselines/baselines/ddpg/logs/'
+    root_dir ='/usr/local/tianbing/baidu/idl/baselines/baselines/ddpg/lz_logs/'
     args['noise_type'] = 'none'
     args['nb_epoch_cycles'] = 1
     for nb_rollout in [1000, 500, 200]:

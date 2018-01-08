@@ -124,12 +124,13 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
     env_name = args['env_id'] 
-    root_dir = '/home/tianbing/github/baselines/baselines/ddpg/logs/'
+    #root_dir = '/home/tianbing/github/baselines/baselines/ddpg/logs/'
+    root_dir ='/usr/local/tianbing/baidu/idl/baselines/baselines/ddpg/lz_logs/'
     args['noise_type'] = 'none'
     args['nb_epoch_cycles'] = 1
-    args['nb_rollout_steps'] = 200
-    args['nb_epochs'] = 2500 
-    for nb_train in [1, 10, 100, 1000]:
+    args['nb_rollout_steps'] = 10000 #200
+    args['nb_epochs'] = 100 #2500 
+    for nb_train in [1000]:
         args['nb_train_steps'] = nb_train 
         log_dir = os.path.join(root_dir,
                 "env={:}_{:}_nc={:}_nr={:}_ne={:}_nt={:}_{:}".format(env_name,

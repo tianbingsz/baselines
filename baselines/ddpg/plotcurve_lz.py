@@ -122,7 +122,8 @@ def main(argv):
     else:
         outputfile = sys.stdout
 
-    input_dir = "/home/tianbing/github/baselines/baselines/ddpg/logs/"
+    #input_dir = "/home/tianbing/github/baselines/baselines/ddpg/logs/"
+    input_dir = "/usr/local/tianbing/baidu/idl/baselines/baselines/ddpg/lz_logs/"
     inputfiles = [input_dir + inputfile + "/progress.csv" for inputfile in
                   args.inputs]
     plot_average_return(args.key, inputfiles[0], outputfile)
